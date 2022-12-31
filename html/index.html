@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Väder </title>
+</head>
+<body>
+<style>
+* { margin:0;
+  padding: 0;
+  box-sizing: border-box;}
+
+  .input{
+  color: white;
+  text-shadow: 20px;
+  text-align: center;
+  margin: 100px; }
+
+  body{
+  background-image: url("https://wallpaperaccess.com/full/508751.jpg");
+  background-size: cover;}
+
+  </style>
+    <div class="input">
+    <h1 class="name"></h1>
+      <p class="temp"></p>
+      <input type= "submit" value="sök" class="submit">
+      <input type= "text" placeholder="Skriv in stad "class="input_text">
+      <input id="inputKelvin" type="number" placeholder="Skriv in K värdet" oninput="temperatureConverter(this.value)" onchange="temperatureConverter(this.value)">
+  <p> Celcius: <span id="outputCelcius"></span> </p>
+<script>
+
+  var length = document.getElementById("längd"); 
+  var name2 = prompt("Säkerhetkontroll: Skriv något för att komma in i hemsidan.");
+  var temp = document.querySelector('.temp');
+  var button = document.querySelector('.submit');
+  var input = document.querySelector('.input_text');
+  var main = document.querySelector('.name');
+
+  function temperatureConverter(valNum) {
+    valNum = parseFloat(valNum);
+    document.getElementById("outputCelcius").innerHTML=valNum - 273; }
+
+  button.addEventListener('click', function(name){
+  fetch('https://api.openweathermap.org/data/2.5/weather?q='+input.value+'&appid=58f4a092fc1740171efc6049b26d126b')
+  .then(response => response.json())
+  .then(data => {
+  var nameValue = data['name'];
+  var tempValue = data['main'] ['temp'];
+  main.innerHTML = nameValue; temp.innerHTML = "(K)"+tempValue;  });})
+</script>
+</body>
+</html>
